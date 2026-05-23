@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI语言导师 - Powered by MiMo V2.5</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#ec4899;--a:#db2777;--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--muted:#94a3b8}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.hero{padding:60px 20px;text-align:center;background:linear-gradient(135deg,var(--bg) 0%,#1a1a2e 50%,var(--bg) 100%);position:relative}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 30% 50%,#ec489915 0%,transparent 50%),radial-gradient(circle at 70% 50%,#db277710 0%,transparent 50%)}
+.hero-content{position:relative;z-index:1}
+.hero-icon{font-size:64px;margin-bottom:20px;display:block}
+.hero h1{font-size:2.5em;background:linear-gradient(135deg,#ec4899,#db2777);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.hero p{color:var(--muted);font-size:1.1em;max-width:600px;margin:0 auto 30px}
+.badge{display:inline-block;padding:6px 16px;border-radius:20px;background:#ec489920;color:#ec4899;font-size:0.85em;border:1px solid #ec489940;margin:5px}
+.container{max-width:1000px;margin:0 auto;padding:0 20px}
+.section{padding:50px 0}
+.section h2{font-size:1.8em;margin-bottom:30px;text-align:center}
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.agent-card{background:var(--card);border-radius:16px;padding:30px;text-align:center;border:1px solid #334155;transition:all .3s;animation:slideUp .6s ease forwards;opacity:0;transform:translateY(20px)}
+.agent-card:hover{border-color:#ec4899;transform:translateY(-5px);box-shadow:0 10px 40px #ec489920}
+.agent-icon{font-size:48px;margin-bottom:15px}
+.agent-name{font-size:1.2em;font-weight:600;margin-bottom:5px}
+.agent-role{color:var(--muted);font-size:0.9em;margin-bottom:15px}
+.agent-status{display:flex;align-items:center;justify-content:center;gap:6px;font-size:0.85em;color:#ec4899}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#ec4899;animation:pulse 2s infinite}
+.demo-section{background:var(--card);border-radius:20px;padding:40px;margin:20px 0;border:1px solid #334155}
+.input-group{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.input-group input,.input-group textarea{flex:1;min-width:200px;padding:12px 16px;border-radius:12px;border:1px solid #334155;background:#0f172a;color:var(--text);font-size:1em;outline:none;transition:border .3s}
+.input-group input:focus,.input-group textarea:focus{border-color:#ec4899}
+.btn{padding:12px 28px;border-radius:12px;border:none;background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;font-size:1em;font-weight:600;cursor:pointer;transition:all .3s}
+.btn:hover{transform:scale(1.05);box-shadow:0 5px 20px #ec489940}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.output{background:#0f172a;border-radius:12px;padding:20px;margin-top:20px;border:1px solid #334155;min-height:100px;font-family:'Fira Code',monospace;font-size:0.9em;line-height:1.6;white-space:pre-wrap;display:none}
+.output.show{display:block;animation:fadeIn .3s}
+.output .agent-label{color:#ec4899;font-weight:600}
+.output .thinking{color:var(--muted);font-style:italic}
+.arch{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin:30px 0}
+.arch-item{background:#0f172a;border-radius:12px;padding:20px;text-align:center;border:1px solid #334155}
+.arch-item h4{color:#ec4899;margin-bottom:8px}
+.arch-item p{color:var(--muted);font-size:0.85em}
+.tech-stack{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0}
+.tech{padding:8px 16px;border-radius:8px;background:#ec489915;color:#ec4899;font-size:0.85em;border:1px solid #ec489930}
+.footer{text-align:center;padding:40px 20px;color:var(--muted);border-top:1px solid #1e293b}
+.footer a{color:#ec4899;text-decoration:none}
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media(max-width:768px){.hero h1{font-size:1.8em}.agents-grid{grid-template-columns:1fr}.input-group{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="hero">
+<div class="hero-content">
+<span class="hero-icon">🗣️</span>
+<h1>AI语言导师</h1>
+<p>AI language learning with personalized tutoring</p>
+<div class="badge">Powered by MiMo V2.5</div>
+<div class="badge">Multi-Agent Architecture</div>
+</div>
+</div>
+
+<div class="container">
+<div class="section">
+<h2>🤖 Agent Team</h2>
+<div class="agents-grid">
+        <div class="agent-card" style="animation-delay: 0.0s">
+            <div class="agent-icon">🧠</div>
+            <div class="agent-name">语法专家</div>
+            <div class="agent-role">Coordinator</div>
+            <div class="agent-status"><span class="status-dot"></span>Active</div>
+        </div>
+        <div class="agent-card" style="animation-delay: 0.15s">
+            <div class="agent-icon">🔍</div>
+            <div class="agent-name">词汇构建师</div>
+            <div class="agent-role">Analyst</div>
+            <div class="agent-status"><span class="status-dot"></span>Active</div>
+        </div>
+        <div class="agent-card" style="animation-delay: 0.3s">
+            <div class="agent-icon">⚡</div>
+            <div class="agent-name">对话伙伴</div>
+            <div class="agent-role">Executor</div>
+            <div class="agent-status"><span class="status-dot"></span>Active</div>
+        </div>
+</div>
+</div>
+
+<div class="section">
+<h2>⚡ Live Demo</h2>
+<div class="demo-section">
+<div class="input-group">
+<input type="text" id="userInput" placeholder="输入您的需求..." />
+<button class="btn" onclick="runDemo()" id="runBtn">开始分析</button>
+</div>
+<div class="output" id="output"></div>
+</div>
+</div>
+
+<div class="section">
+<h2>🏗️ Architecture</h2>
+<div class="arch">
+<div class="arch-item"><h4>🧠 Coordinator</h4><p>任务分解与调度</p></div>
+<div class="arch-item"><h4>🔍 Analyst</h4><p>深度分析与推理</p></div>
+<div class="arch-item"><h4>⚡ Executor</h4><p>执行与输出生成</p></div>
+</div>
+</div>
+
+<div class="section">
+<h2>🛠️ Tech Stack</h2>
+<div class="tech-stack">
+<div class="tech">MiMo V2.5</div>
+<div class="tech">Multi-Agent</div>
+<div class="tech">Chain-of-Thought</div>
+<div class="tech">RAG</div>
+<div class="tech">Real-time</div>
+</div>
+</div>
+</div>
+
+<div class="footer">
+<p>Built with ❤️ using <a href="https://github.com/XiaomiMiMo/MiMo">MiMo V2.5</a> Multi-Agent Framework</p>
+<p style="margin-top:8px;font-size:0.85em">© 2025 AI语言导师 — AI-Powered Solutions</p>
+</div>
+
+<script>
+const agents = ["语法专家", "词汇构建师", "对话伙伴"];
+const demoResponses = [
+  "正在分析您的需求...",
+  "🧠 语法专家: 收到任务，开始进行初步分析...",
+  "🔍 词汇构建师: 正在深度分析数据结构和模式...",
+  "⚡ 对话伙伴: 基于分析结果生成执行方案...",
+  "✅ 分析完成！已生成优化建议。"
+];
+
+async function runDemo() {
+  const btn = document.getElementById('runBtn');
+  const output = document.getElementById('output');
+  const input = document.getElementById('userInput').value || '帮我分析这个问题';
+  btn.disabled = true;
+  btn.textContent = '处理中...';
+  output.classList.add('show');
+  output.innerHTML = '';
+
+  for (let i = 0; i < demoResponses.length; i++) {
+    await new Promise(r => setTimeout(r, 800 + Math.random() * 600));
+    const line = document.createElement('div');
+    if (demoResponses[i].includes('🧠') || demoResponses[i].includes('🔍') || demoResponses[i].includes('⚡')) {
+      line.innerHTML = '<span class="agent-label">' + demoResponses[i].split(':')[0] + ':</span>' + demoResponses[i].split(':').slice(1).join(':');
+    } else {
+      line.textContent = demoResponses[i];
+    }
+    output.appendChild(line);
+    output.scrollTop = output.scrollHeight;
+  }
+
+  await new Promise(r => setTimeout(r, 500));
+  const result = document.createElement('div');
+  result.style.marginTop = '10px';
+  result.style.color = '#ec4899';
+  result.textContent = '📊 分析结果: 基于 MiMo V2.5 的多智能体协作已完成任务分解和优化建议生成。';
+  output.appendChild(result);
+
+  btn.disabled = false;
+  btn.textContent = '重新分析';
+}
+</script>
+</body>
+</html>
